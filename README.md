@@ -6,10 +6,19 @@ References: [Hubstaff developer portal](https://developer.hubstaff.com/)
 
 # How to use
 
-Simple exemple:
 
 - Access https://developer.hubstaff.com/personal_access_tokens
 - Create your own access token, e copy the `refresh_token` that will be generated.
+- Send in the Hubstaff instance:
+
+  ```js
+  import Hubstaff from '@app-masters/hubstaff-node-client';
+
+  const hubstaff = new Hubstaff({ refresh_token: 'your-refresh-token' });
+  //...
+  ```
+- By now you can access the methods.
+Simple exemple:
 
 
 ```
