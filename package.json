@@ -1,9 +1,13 @@
 {
   "name": "@app-masters/hubstaff-node-client",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Simple library to access hubstaff API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/app-masters/hubstaff-node-client.git"
+  },
   "dependencies": {
     "axios": "^0.21.0",
     "request": "^2.88.2"
