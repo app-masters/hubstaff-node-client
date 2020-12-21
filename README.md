@@ -8,6 +8,10 @@ References: [Hubstaff developer portal](https://developer.hubstaff.com/)
 
 Simple exemple:
 
+- Access https://developer.hubstaff.com/personal_access_tokens
+- Create your own access token, e copy the `refresh_token` that will be generated.
+
+
 ```
 // Setup your account
 
