@@ -14,28 +14,52 @@ References: [Hubstaff developer portal](https://developer.hubstaff.com/)
   ```js
   import Hubstaff from '@app-masters/hubstaff-node-client';
 
-  const hubstaff = new Hubstaff({ refresh_token: 'your-refresh-token' });
+  const hubstaff = new Hubstaff({ refreshToken: 'your-refresh-token' });
   //...
   ```
 - By now you can access the methods.
+
 Simple exemple:
 
 
-```
+```js
+import Hubstaff from '@app-masters/hubstaff-node-client';
+
 // Setup your account
+const hubstaff = new Hubstaff({ refreshToken: 'your-refresh-token' });
 
 // Get organizations
+const orgs = hubstaff.getOrganizations();
+console.log(orgs); 
+/* Output: 
+[
+  {
+    id: 55426,
+    name: 'App Masters',
+    status: 'active',
+    created_at: '2017-06-05T12:21:08.432670Z',
+    updated_at: '2020-12-07T17:00:04.712558Z',
+    metadata: {},
+    invite_url: 'https://app.hubstaff.com/organizations/invite/CaGUpl-P_j8WexfImdk6Sg'
+  }
+]
+*/
 
 // Get projects
+const projects = hubstaff.getProjects(orgs[0].id);
+console.log(projects); // Output: Project[]
 
 // Get tasks
+const tasks = hubstaff.getTasks(orgs[0].id);
+console.log(tasks); // Output: Task[]
 
 // Get activities
-
+const activities = hubstaff.getActivities(orgs[0].id);
+console.log(activities); // Output: Activity[]
 ```
 
 # How to contribute
 
-We focused just on some enbpoints we need to use, but is really simple to add any other. 
+We focused just on some endpoints we need to use, but is really simple to add any other. 
 
 Feel free to contribute, start by opening a issue please.

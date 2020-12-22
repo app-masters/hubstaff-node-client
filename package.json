@@ -1,6 +1,6 @@
 {
   "name": "@app-masters/hubstaff-node-client",
-  "version": "1.0.7",
+  "version": "1.1.1",
   "description": "Simple library to access hubstaff API.",
   "main": "dist/Hubstaff.js",
   "types": "dist/Hubstaff.d.ts",

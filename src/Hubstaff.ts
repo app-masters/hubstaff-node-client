@@ -7,12 +7,12 @@ import {
   PaginationType,
   ClientsQuery,
   ActivitiesQuery,
-  Organization,
   Project,
   Client,
   User,
   Task,
   Activity,
+  Organization,
 } from "./types";
 
 class Hubstaff {
@@ -62,60 +62,66 @@ class Hubstaff {
     }
   }
 
-  getOrganizations(params?: PaginationType): Promise<Array<Organization>> {
-    return this.request("/organizations", {
+  async getOrganizations(params?: PaginationType): Promise<Organization[]> {
+    const res = await this.request("/organizations", {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
     });
+    return res.organizations;
   }
 
-  getProjects(
+  async getProjects(
     organizationId: number,
-    { status = "active", ...params }: ProjectsQuery
-  ): Promise<Array<Project>> {
-    return this.request(`/organizations/${organizationId}/projects`, {
+    params?: ProjectsQuery
+  ): Promise<Project[]> {
+    const res = await this.request(`/organizations/${organizationId}/projects`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
-      status: status,
+      status: params?.status || 'active',
     });
+    return res.projects;
   }
 
-  getClients(
+  async getClients(
     organizationId: number,
-    { status = "active", ...params }: ClientsQuery
-  ): Promise<Array<Client>> {
-    return this.request(`/organizations/${organizationId}/clients`, {
+    params?: ClientsQuery
+  ): Promise<Client[]> {
+    const res = await this.request(`/organizations/${organizationId}/clients`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
-      status: status,
+      status: params?.status || 'active',
     });
+    return res.clients; 
   }
 
-  getUsers(userId: number): Promise<User> {
-    return this.request(`/users/${userId}`);
+  async getUsers(userId: number): Promise<User> {
+    const res = await this.request(`/users/${userId}`);
+    return res.user;
   }
 
-  getTasks(organizationId: number, params?: TasksQuery): Promise<Array<Task>> {
-    return this.request(`/organizations/${organizationId}/tasks`, {
+  async getTasks(organizationId: number, params?: TasksQuery): Promise<Task[]> {
+    const res = await this.request(`/organizations/${organizationId}/tasks`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
       status: params?.status,
       user_ids: params?.userIds,
       project_ids: params?.projectIds,
     });
+    return res.tasks;
   }
 
-  getActivities(organizationId: number, params: ActivitiesQuery): Promise<Array<Activity>> {
-    return this.request(`/organizations/${organizationId}/activities`, {
+  async getActivities(organizationId: number, params?: ActivitiesQuery): Promise<Activity[]> {
+    const res = await this.request(`/organizations/${organizationId}/activities`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
       user_ids: params?.userIds,
       project_ids: params?.projectIds,
       task_ids: params?.taskIds,
-      "time_slot[start]": params.startTime.toISOString(),
-      "time_slot[stop]": params.stopTime.toISOString(),
+      "time_slot[start]": params?.startTime.toISOString(),
+      "time_slot[stop]": params?.stopTime.toISOString(),
     });
+    return res.activities;
   }
 }
 
-export default Hubstaff;
+export = Hubstaff;
