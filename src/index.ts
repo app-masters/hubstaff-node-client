@@ -1,0 +1,10 @@
+import Hubstaff from "./Hubstaff";
+
+const hubstaff = new Hubstaff({refreshToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6ImRlZmF1bHQifQ.eyJqdGkiOiJVRktHNkxwSyIsImlzcyI6Imh0dHBzOi8vYWNjb3VudC5odWJzdGFmZi5jb20iLCJleHAiOjE2MTY0MTgzNDcsImlhdCI6MTYwODY0MjM0Nywic2NvcGUiOiJwcm9maWxlIGVtYWlsIGh1YnN0YWZmOnJlYWQifQ.cp0oQIEDIL7VJtdC_tu6aheYqk0c1uQ5VXMPrqCAAywXd6OPBzgwMcboQ-A3dGHlxdZlzVIke2H0rg9Hl8_lqdnlntwTS_mmN3n3lpA7Ruz1T2W92NIQhkCPeZtXE1d3jycauHjLSlr0zmsQeIfPo4Pp5RYlipJISwrvJAkjOmFckafO8Vf6Pl8-nAN_RWijbSsNPxuLigvqR-R_ZCwlK9wG5UHdUYykmvDbyFAkc4x7lqJ-Rrd9-3hjBQAeL4GarvAA93vZ8yds7iXJ3jU8yVkTTj4dhYMH7hsCGzVBI5hjsKsZaArpTvhpQkAGngpCPsiLifkOqJmqZzDkS35Iug'})
+
+const main = async () => {
+  const orgs = await hubstaff.getOrganizations();
+  console.log(orgs)
+}
+
+main();

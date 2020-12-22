@@ -1,6 +1,19 @@
 "use strict";
 import axios, { AxiosInstance } from "axios";
-import { HubstaffConfig, TasksQuery, ProjectsQuery, PaginationType, ClientsQuery, ActivitiesQuery } from "./types";
+import {
+  HubstaffConfig,
+  TasksQuery,
+  ProjectsQuery,
+  PaginationType,
+  ClientsQuery,
+  ActivitiesQuery,
+  Organization,
+  Project,
+  Client,
+  User,
+  Task,
+  Activity,
+} from "./types";
 
 class Hubstaff {
   api: AxiosInstance | undefined;
@@ -49,7 +62,7 @@ class Hubstaff {
     }
   }
 
-  getOrganizations(params: PaginationType) {
+  getOrganizations(params?: PaginationType): Promise<Array<Organization>> {
     return this.request("/organizations", {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
@@ -58,31 +71,31 @@ class Hubstaff {
 
   getProjects(
     organizationId: number,
-    {status = 'active', ...params}: ProjectsQuery
-  ) {
+    { status = "active", ...params }: ProjectsQuery
+  ): Promise<Array<Project>> {
     return this.request(`/organizations/${organizationId}/projects`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
-      status: status
+      status: status,
     });
   }
 
-  getClients(organizationId: number, {status = 'active', ...params}: ClientsQuery) {
+  getClients(
+    organizationId: number,
+    { status = "active", ...params }: ClientsQuery
+  ): Promise<Array<Client>> {
     return this.request(`/organizations/${organizationId}/clients`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
-      status: status
+      status: status,
     });
   }
 
-  getUsers(userId: number) {
+  getUsers(userId: number): Promise<User> {
     return this.request(`/users/${userId}`);
   }
 
-  getTasks(
-    organizationId: number,
-    params?: TasksQuery
-  ) {
+  getTasks(organizationId: number, params?: TasksQuery): Promise<Array<Task>> {
     return this.request(`/organizations/${organizationId}/tasks`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
@@ -92,15 +105,15 @@ class Hubstaff {
     });
   }
 
-  getActivities(organizationId: number, params: ActivitiesQuery) {
+  getActivities(organizationId: number, params: ActivitiesQuery): Promise<Array<Activity>> {
     return this.request(`/organizations/${organizationId}/activities`, {
       page_start_id: params?.pageStartId,
       page_limit: params?.pageLimit,
       user_ids: params?.userIds,
       project_ids: params?.projectIds,
       task_ids: params?.taskIds,
-      'time_slot[start]': params.startTime.toISOString(),
-      'time_slot[stop]': params.stopTime.toISOString()
+      "time_slot[start]": params.startTime.toISOString(),
+      "time_slot[stop]": params.stopTime.toISOString(),
     });
   }
 }
