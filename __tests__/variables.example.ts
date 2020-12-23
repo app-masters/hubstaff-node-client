@@ -1,5 +1,5 @@
-/* Env variables for tests */
 
-const accessToken: string = '';
+const accessToken = '';
+const refreshToken = '';
 
-export { accessToken };
+export { accessToken, refreshToken };

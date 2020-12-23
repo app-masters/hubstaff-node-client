@@ -1,10 +1,10 @@
 import Hubstaff from '../../src/Hubstaff';
-import { accessToken } from '../variables';
+import { accessToken, refreshToken } from '../variables';
 
 let hubstaff: import("../../src/Hubstaff");
 beforeAll(async () => {
   try {
-    hubstaff = new Hubstaff({ accessToken });
+    hubstaff = new Hubstaff({ accessToken, refreshToken });
     expect(hubstaff).not.toBeUndefined();
   } catch (error) {
     console.log('error', error.response.message)
@@ -16,7 +16,7 @@ describe('User Test', () => {
     const orgs = await hubstaff.getOrganizations();
     expect(orgs.length).toBeGreaterThan(0);
 
-    const user = await hubstaff.getUsers(977326);
+    const user = await hubstaff.getUser(977326);
     expect(user).toBeDefined();
   });
 });

@@ -1,9 +1,12 @@
-import Hubstaff from '../../src/Hubstaff';
-import { accessToken } from '../variables';
+import Hubstaff from "../../src/Hubstaff";
+import { accessToken, refreshToken } from "../variables";
 
-describe('Auth Test', () => {
-  it('should fail without the right access token', async () => {
-    const hubstaffWrong = new Hubstaff({ accessToken: 'errado' });
+describe("Auth Test", () => {
+  it("should fail without the right access token", async () => {
+    const hubstaffWrong = new Hubstaff({
+      accessToken: "errado",
+      refreshToken: ""
+    });
     try {
       await hubstaffWrong.getOrganizations();
     } catch (error) {
@@ -11,8 +14,8 @@ describe('Auth Test', () => {
     }
   });
 
-  it('should give success with the right token', async () => {
-    const hubstaff = new Hubstaff({ accessToken });
+  it("should give success with the right token", async () => {
+    const hubstaff = new Hubstaff({ accessToken, refreshToken });
     expect(hubstaff).toBeDefined();
 
     const orgs = await hubstaff.getOrganizations();

@@ -1,10 +1,10 @@
 import Hubstaff from '../../src/Hubstaff';
-import { accessToken } from '../variables';
+import { accessToken, refreshToken } from '../variables';
 
 let hubstaff: import("../../src/Hubstaff");
 beforeAll(async () => {
   try {
-    hubstaff = new Hubstaff({ accessToken });
+    hubstaff = new Hubstaff({ accessToken, refreshToken });
     expect(hubstaff).not.toBeUndefined();
   } catch (error) {
     console.log('error', error.response)
