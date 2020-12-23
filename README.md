@@ -6,27 +6,23 @@ References: [Hubstaff developer portal](https://developer.hubstaff.com/)
 
 # How to use
 
+- Send the `accessToken` and the `refreshToken` in the Hubstaff instance:
 
-- Access https://developer.hubstaff.com/personal_access_tokens
-- Create your own access token, e copy the `refresh_token` that will be generated.
-- Send in the Hubstaff instance:
+```js
+import Hubstaff from '@app-masters/hubstaff-node-client';
 
-  ```js
-  import Hubstaff from '@app-masters/hubstaff-node-client';
-
-  const hubstaff = new Hubstaff({ refreshToken: 'your-refresh-token' });
-  //...
-  ```
+const hubstaff = new Hubstaff({ accessToken: "your-access-token", refreshToken: "your-refresh-token" });
+//...
+```
 - By now you can access the methods.
 
 Simple exemple:
-
 
 ```js
 import Hubstaff from '@app-masters/hubstaff-node-client';
 
 // Setup your account
-const hubstaff = new Hubstaff({ refreshToken: 'your-refresh-token' });
+const hubstaff = new Hubstaff({ tokenObject: 'your-token-object' });
 
 // Get organizations
 const orgs = hubstaff.getOrganizations();
@@ -56,6 +52,26 @@ console.log(tasks); // Output: Task[]
 // Get activities
 const activities = hubstaff.getActivities(orgs[0].id);
 console.log(activities); // Output: Activity[]
+```
+
+# How to get the access and refresh token: 
+- Access https://developer.hubstaff.com/personal_access_tokens
+- Create your own access token, e copy the `refresh_token` that will be generated.
+```js
+import Hubstaff from '@app-masters/hubstaff-node-client';
+
+const tokenObj = Hubstaff.getTokenObject('your-refresh-token');
+console.log(tokenObj.accessToken); // Output: 'your-access-token'
+console.log(tokenObj.refreshToken); // Output: 'your-refresh-token'
+```
+
+# How to test
+
+- Copy the `variables.examples.ts` file and create a new file `variables.ts` inside folder `__tests__`.
+- In that new file assign your access_token to the `accessToken` variable that is already declared. 
+```js
+  accessToken: 'your-access-token',
+  refreshToken: '', // you can leave it blank
 ```
 
 # How to contribute
