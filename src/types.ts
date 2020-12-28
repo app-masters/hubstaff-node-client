@@ -1,4 +1,17 @@
+export interface DecodedToken {
+  jti: string;
+  iss: string;
+  exp: number,
+  iat: number,
+  scope: string;
+}
+
+export interface PaginationObject {
+  next_page_start_id: number;
+}
+
 export interface HubstaffConfig {
+  accessToken: string;
   refreshToken: string;
 }
 
@@ -7,26 +20,31 @@ export interface PaginationType {
   pageLimit?: number;
 }
 
-export interface ProjectsQuery extends PaginationType {
+export interface ProjectsQuery {
   status?: "active" | "archived" | "all";
 }
 
-export interface ClientsQuery extends PaginationType {
+export interface ClientsQuery {
   status?: "active" | "archived" | "all";
 }
 
-export interface TasksQuery extends PaginationType {
-  status?: "active" | "completed" | "deleted";
+export interface TasksQuery {
+  status?: "active" | "completed" | "archived" | "deleted" | "archived_native_active" | "archived_native_completed" | "archived_native_deleted";
   userIds?: Array<number>;
   projectIds?: Array<number>;
 }
 
-export interface ActivitiesQuery extends PaginationType {
+export interface ActivitiesQuery {
   userIds?: Array<number>;
   projectIds?: Array<number>;
   taskIds?: Array<number>;
   startTime: Date;
   stopTime: Date;
+}
+
+export interface OrganizationMembersQuery {
+  includeRemoved?: boolean;
+  includeProjects?: boolean;
 }
 
 export interface Organization {
@@ -134,4 +152,52 @@ export interface Activity {
   timesheet_locked?: boolean;
   time_type?: string;
   client?: string;
-  }
+}
+
+export interface DailyActivity {
+  id?: number;
+  date?: string;
+  user_id?: number;
+  project_id?: number;
+  task_id?: number;
+  keyboard?: number;
+  mouse?: number;
+  overall?: number;
+  tracked?: number;
+  manual?: number;
+  idle?: number;
+  resumed?: number;
+  billable?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface OrganizationMember {
+  user_id?: number;
+  pay_rate?: string;
+  bill_rate?: string;
+  currency?: string;
+  membership_role?: string;
+  membership_status?: string;
+  created_at?: string;
+  updated_at?: string;
+  removed_at?: string;
+  last_client_activity?: string;
+  project_members?: Array<NestedProjectMember>;
+  pay_period?: string;
+  fixed_pay_rate?: string;
+  trackable?: string;
+}
+
+export interface NestedProjectMember {
+  pay_rate?: string;
+  bill_rate?: string;
+  currency?: string;
+  membership_role?: string;
+  membership_status?: string;
+  created_at?: string;
+  updated_at?: string;
+  removed_at?: string;
+  last_client_activity?: string;
+  project_id?: number;
+}
