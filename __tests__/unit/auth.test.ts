@@ -4,13 +4,13 @@ import { accessToken, refreshToken } from "../variables";
 describe("Auth Test", () => {
   it("should fail without the right access token", async () => {
     const hubstaffWrong = new Hubstaff({
-      accessToken: "errado",
-      refreshToken: ""
+      accessToken: "wrong",
+      refreshToken: "wrong"
     });
     try {
       await hubstaffWrong.getOrganizations();
     } catch (error) {
-      expect(error.status).toBe(401);
+      expect(error.message).toContain('Invalid token specified');
     }
   });
 
