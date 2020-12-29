@@ -24,12 +24,14 @@ const PAGE_LIMIT = 500;
 
 class Hubstaff {
   api: AxiosInstance;
-  accessToken: HubstaffConfig["accessToken"];
-  refreshToken: HubstaffConfig["refreshToken"];
+  accessToken: HubstaffConfig["tokens"]["accessToken"];
+  refreshToken: HubstaffConfig["tokens"]["refreshToken"];
+  refreshCallback: (accessToken: string, refreshToken: string) => void;
 
-  constructor(config: HubstaffConfig) {
-    this.accessToken = config.accessToken;
-    this.refreshToken = config.refreshToken;
+  constructor(tokens: HubstaffConfig['tokens'], refreshCallback: HubstaffConfig["refreshCallback"]) {
+    this.accessToken = tokens.accessToken;
+    this.refreshToken = tokens.refreshToken;
+    this.refreshCallback = refreshCallback;
     this.api = axios.create({
       baseURL: "https://api.hubstaff.com/v2",
       headers: {
@@ -40,7 +42,7 @@ class Hubstaff {
 
   static async getAccessToken(
     refreshToken: string
-  ): Promise<Pick<HubstaffConfig, "accessToken" | "refreshToken">> {
+  ): Promise<HubstaffConfig["tokens"]> {
     const res = await axios.post(
       "https://account.hubstaff.com/access_tokens",
       {},
@@ -68,21 +70,26 @@ class Hubstaff {
         "You must set access token. Call Hubstaff.getAccessToken('your-refresh-token')"
       );
     }
-    const decodedToken: DecodedToken = jwtDecode(this.accessToken);
-
-    if (decodedToken.exp < this.unixTimeNow()) {
-      // Refresh Token
-      const { accessToken, refreshToken } = await Hubstaff.getAccessToken(
-        this.refreshToken
-      );
-      this.accessToken = accessToken;
-      this.refreshToken = refreshToken;
-      this.api = axios.create({
-        baseURL: "https://api.hubstaff.com/v2",
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-        },
-      });
+    try {
+      const decodedToken: DecodedToken = jwtDecode(this.accessToken);
+      if (decodedToken.exp < this.unixTimeNow()) {
+        // Refresh Token
+        const { accessToken, refreshToken } = await Hubstaff.getAccessToken(
+          this.refreshToken
+        );
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+        this.refreshCallback(this.accessToken, this.refreshToken);
+        this.api = axios.create({
+          baseURL: "https://api.hubstaff.com/v2",
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error checking the token");
     }
   }
 

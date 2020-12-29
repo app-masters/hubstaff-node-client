@@ -11,8 +11,11 @@ export interface PaginationObject {
 }
 
 export interface HubstaffConfig {
-  accessToken: string;
-  refreshToken: string;
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
+  refreshCallback: (accessToken: string, refreshToken: string) => void; 
 }
 
 export interface PaginationType {
