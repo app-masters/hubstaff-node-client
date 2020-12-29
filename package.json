@@ -4,6 +4,7 @@
   "description": "Simple library to access hubstaff API.",
   "main": "dist/Hubstaff.js",
   "types": "dist/Hubstaff.d.ts",
+  "keywords": ["Javascript", "nodeJS", "hubstaff", "API", "Client"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/app-masters/hubstaff-node-client.git"
