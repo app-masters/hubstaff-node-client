@@ -79,7 +79,7 @@ class Hubstaff {
         );
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.refreshCallback(this.accessToken, this.refreshToken);
+        await this.refreshCallback(this.accessToken, this.refreshToken);
         this.api = axios.create({
           baseURL: "https://api.hubstaff.com/v2",
           headers: {
