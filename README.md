@@ -54,7 +54,7 @@ console.log(orgs);
     created_at: '2017-06-05T12:21:08.432670Z',
     updated_at: '2020-12-07T17:00:04.712558Z',
     metadata: {},
-    invite_url: 'https://app.hubstaff.com/organizations/invite/CaGUpl-P_j8WexfImdk6Sg'
+    invite_url: 'https://app.hubstaff.com/organizations/invite/exfImdk6Skl213g'
   }
 ]
 */
