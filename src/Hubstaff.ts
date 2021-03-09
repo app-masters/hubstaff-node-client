@@ -28,7 +28,10 @@ class Hubstaff {
   refreshToken: HubstaffConfig["tokens"]["refreshToken"];
   refreshCallback: (accessToken: string, refreshToken: string) => void;
 
-  constructor(tokens: HubstaffConfig['tokens'], refreshCallback: HubstaffConfig["refreshCallback"]) {
+  constructor(
+    tokens: HubstaffConfig["tokens"],
+    refreshCallback: HubstaffConfig["refreshCallback"]
+  ) {
     this.accessToken = tokens.accessToken;
     this.refreshToken = tokens.refreshToken;
     this.refreshCallback = refreshCallback;
@@ -43,21 +46,29 @@ class Hubstaff {
   static async getAccessToken(
     refreshToken: string
   ): Promise<HubstaffConfig["tokens"]> {
-    const res = await axios.post(
-      "https://account.hubstaff.com/access_tokens",
-      {},
-      {
-        params: {
-          grant_type: "refresh_token",
-          refresh_token: refreshToken,
-        },
-      }
-    );
+    try {
+      const res = await axios.post(
+        "https://account.hubstaff.com/access_tokens",
+        {},
+        {
+          params: {
+            grant_type: "refresh_token",
+            refresh_token: refreshToken,
+          },
+        }
+      );
 
-    return {
-      accessToken: res.data.access_token,
-      refreshToken: res.data.refresh_token,
-    };
+      return {
+        accessToken: res.data.access_token,
+        refreshToken: res.data.refresh_token,
+      };
+    } catch (error) {
+      console.log("Error getting the access token: ", error.response?.data);
+      throw {
+        status: error.response?.status,
+        ...error.response?.data,
+      };
+    }
   }
 
   private unixTimeNow() {
