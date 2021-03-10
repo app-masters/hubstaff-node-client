@@ -12,10 +12,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v1.0.0
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1.2.0
-      with:
-        node-version: '15.x'
+    # - name: Set up Node.js
+    #   uses: actions/setup-node@v1.2.0
+    #   with:
+    #     node-version: '15.x'
     
     - name: Install dependencies
       run: yarn install
