@@ -8,6 +8,7 @@ on:
 jobs:
   publish: 
     runs-on: ubuntu-latest
+    environment: production
     steps:
     - uses: actions/checkout@v2
     # Setup .npmrc file to publish to npm
@@ -15,7 +16,7 @@ jobs:
       with:
         node-version: '15.x'
         registry-url: 'https://registry.npmjs.org'
-    # - run: npm install
+    - run: yarn install
     - run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
