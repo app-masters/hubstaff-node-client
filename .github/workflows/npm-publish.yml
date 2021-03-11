@@ -4,32 +4,32 @@ on:
     branches:
       - 10-publish-action # Change this to your default branch
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
 
-    steps: 
-    - name: Checkout repository
-      uses: actions/checkout@v1.0.0
+  #   steps: 
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v1.0.0
 
-    # - name: Set up Node.js
-    #   uses: actions/setup-node@v1.2.0
-    #   with:
-    #     node-version: '15.x'
+  #   # - name: Set up Node.js
+  #   #   uses: actions/setup-node@v1.2.0
+  #   #   with:
+  #   #     node-version: '15.x'
     
-    - name: Install dependencies
-      run: yarn install
+  #   - name: Install dependencies
+  #     run: yarn install
 
-    - name: Compile build
-      run: npm run build # This can be whatever command you use to build your package
+  #   - name: Compile build
+  #     run: npm run build # This can be whatever command you use to build your package
 
-    # - name: Commit changes
-    #   uses: EndBug/add-and-commit@v7
-    #   with: # More info about the arguments on the action page
-    #     add: 'dist'
-    #     message: 'Pushing build'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
+  #   # - name: Commit changes
+  #   #   uses: EndBug/add-and-commit@v7
+  #   #   with: # More info about the arguments on the action page
+  #   #     add: 'dist'
+  #   #     message: 'Pushing build'
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
