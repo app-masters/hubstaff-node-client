@@ -1,57 +1,46 @@
 name: npm-publish
 on:
-  push:
-    branches:
-      - 10-publish-action # Change this to your default branch
+  release:
+    types: [created]
+  # push:
+  #   branches:
+  #     - 10-publish-action # Change this to your default branch
 jobs:
-  # build:
-  #   name: Build
+  publish: 
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    # Setup .npmrc file to publish to npm
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '15.x'
+        registry-url: 'https://registry.npmjs.org'
+    # - run: npm install
+    - run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+  # npm-publish:
+  #   name: npm-publish
   #   runs-on: ubuntu-latest
-
-  #   steps: 
+  #   environment: production
+  #   steps:
   #   - name: Checkout repository
   #     uses: actions/checkout@v1.0.0
 
-  #   # - name: Set up Node.js
-  #   #   uses: actions/setup-node@v1.2.0
-  #   #   with:
-  #   #     node-version: '15.x'
-    
   #   - name: Install dependencies
   #     run: yarn install
 
   #   - name: Compile build
   #     run: npm run build # This can be whatever command you use to build your package
 
-  #   # - name: Commit changes
-  #   #   uses: EndBug/add-and-commit@v7
-  #   #   with: # More info about the arguments on the action page
-  #   #     add: 'dist'
-  #   #     message: 'Pushing build'
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This gets generated automatically
-  npm-publish:
-    name: npm-publish
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v1.0.0
-
-    - name: Install dependencies
-      run: yarn install
-
-    - name: Compile build
-      run: npm run build # This can be whatever command you use to build your package
-
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Publish if version has been updated
-      uses: pascalgn/npm-publish-action@1.3.6
-      with: # All of theses inputs are optional
-        workspace: "."
-        commit_pattern: "^Release (\\S+)"
-        publish_command: "npm"
-      env: # More info about the environment variables in the README
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v2
+  #   - name: Publish if version has been updated
+  #     uses: pascalgn/npm-publish-action@1.3.6
+  #     with: # All of theses inputs are optional
+  #       workspace: "."
+  #       commit_pattern: "^Release (\\S+)"
+  #       publish_command: "npm"
+  #     env: # More info about the environment variables in the README
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
+  #       NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings
