@@ -33,6 +33,7 @@ jobs:
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
+    needs: build
     environment: production
     steps:
     - name: Checkout repository
