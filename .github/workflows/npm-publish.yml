@@ -33,12 +33,14 @@ jobs:
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
+    environment: production
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Publish if version has been updated
       uses: pascalgn/npm-publish-action@1.3.6
       with: # All of theses inputs are optional
+        create_tag: "false"
         workspace: "."
         publish_command: "npm"
       env: # More info about the environment variables in the README
