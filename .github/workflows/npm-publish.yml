@@ -33,6 +33,7 @@ jobs:
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
+    needs: build
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
